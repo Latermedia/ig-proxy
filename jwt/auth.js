@@ -12,11 +12,14 @@ function jwtToken(req) {
   if (authHeader) {
     // Strip the Bearer string from the beginning
     token = authHeader.replace('Bearer ', '');
-  } else {
+  } else if (req.method === 'GET' || req.method === 'DELETE') {
     // Look for it as a query param (jwt)
     var uri = url.parse(req.url);
     var queryObj = querystring.parse(uri.query);
     token = queryObj['jwt'];
+  } else if (req.body) {
+    // Look for it as part of the body
+    token = req.body['jwt'];
   }
 
   return token;
