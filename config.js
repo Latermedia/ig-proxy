@@ -1,8 +1,13 @@
 /* ./env.json is a json file of the form
 {
   "development": {
-    "INSTAGRAM_CLIENT_SECRET": "mytotallylegitinstagramapisecret"
-  }
+    "INSTAGRAM_CLIENT_SECRET": "mytotallylegitinstagramapisecret",
+    ...
+  },
+  "production": {
+    "INSTAGRAM_CLIENT_SECRET": "mytotallylegitinstagramapisecret",
+    ...
+  },
 }
 */
 
