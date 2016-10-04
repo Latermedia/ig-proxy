@@ -1,4 +1,3 @@
-var config = require('../config')();
 var jwt = require('jsonwebtoken');
 var url = require('url');
 var querystring = require('querystring');
