@@ -32,5 +32,10 @@ app.listen(port, function () {
 
 // curl test examples
 //
-// curl --header "X-Authorization: Bearer <JWT>" -F 'access_token=<ACCESS TOKEN>' https://api.instagram.com/v1/media/<MEDIA ID>/likes
-// curl --header "X-Authorization: Bearer <JWT>" -X DELETE https://api.instagram.com/v1/media/<MEDIA ID>/likes?access_token=<ACCESS TOKEN>
+// curl -F 'access_token=<ACCESS TOKEN>' https://$HOST/proxy/instagram/media/<MEDIA ID>/likes
+// curl -X DELETE https://$HOST/proxy/instagram/media/<MEDIA ID>/likes?access_token=<ACCESS TOKEN>
+//
+// curl --header "X-Authorization: Bearer <JWT>" -F 'access_token=<ACCESS TOKEN>' https://$HOST/secure-proxy/instagram/media/<MEDIA ID>/likes
+// curl -F 'access_token=<ACCESS TOKEN>' -F 'jwt=<JWT>' https://$HOST/secure-proxy/instagram/media/<MEDIA ID>/likes
+// curl --header "X-Authorization: Bearer <JWT>" -X DELETE https://$HOST/secure-proxy/instagram/media/<MEDIA ID>/likes?access_token=<ACCESS TOKEN>
+// curl -X DELETE https://$HOST/secure-proxy/instagram/media/<MEDIA ID>/likes?access_token=<ACCESS TOKEN>&jwt=<JWT>
