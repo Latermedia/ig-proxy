@@ -6,6 +6,10 @@ var querystring = require('querystring');
 // We need to enusre that the keys are sorted correctly.
 // Javascript preservse the insertion order of dictionaries.
 function sort_object(object) {
+  if (!object) {
+    return new Object;
+  }
+
   var keys = Object.keys(object),
     i, len = keys.length;
 
@@ -69,7 +73,7 @@ const igProxy = function(proxyPath, igSecret) {
     logLevel: 'warn',
     pathRewrite: pathRewriteOptions,
 
-    onProxyReq: function (proxyReq, req, res) {
+    onProxyReq: function(proxyReq, req, res) {
       if (proxyReq.method === 'GET' || proxyReq.method === 'DELETE') {
         // Add the sig param to the query parameters for GET and DELETE
         var uri = url.parse(proxyReq.path);
@@ -113,7 +117,7 @@ const igProxy = function(proxyPath, igSecret) {
       }
     },
 
-    onError: function onError(err, req, res) {
+    onError: function(err, req, res) {
       res.writeHead(500, { 'Content-Type': 'text/plain' });
       res.end('Something went wrong.');
     },

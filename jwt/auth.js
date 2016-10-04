@@ -9,6 +9,10 @@ function jwtToken(req) {
   // Pull the JWT from the Authorization header
   var authHeader = req.headers['authorization'];
 
+  if (!authHeader) {
+    authHeader = req.headers['x-authorization'];
+  }
+
   if (authHeader) {
     // Strip the Bearer string from the beginning
     token = authHeader.replace('Bearer ', '');

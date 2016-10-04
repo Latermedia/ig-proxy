@@ -1,5 +1,6 @@
 var express = require('express');
-var basicInstagramProxy = require('./proxies/self-contained-instagram');
+var bodyParser = require('body-parser');
+
 var instagramProxy = require('./proxies/instagram');
 var jwtAuth = require('./jwt/auth');
 var jwtIgAuth = require('./jwt/igAuth');
@@ -7,8 +8,10 @@ var config = require('./config')();
 
 var app = express();
 
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
 app.get('/', function (req, res) {
-	console.log(config);
   res.send('This is my basic Instagram API Proxy!!!');
 });
 
@@ -32,10 +35,12 @@ app.listen(port, function () {
 
 // curl test examples
 //
-// curl -F 'access_token=<ACCESS TOKEN>' https://$HOST/proxy/instagram/media/<MEDIA ID>/likes
-// curl -X DELETE https://$HOST/proxy/instagram/media/<MEDIA ID>/likes?access_token=<ACCESS TOKEN>
+// curl -X POST -d 'access_token=<ACCESS TOKEN>' http://<HOST>/proxy/instagram/media/<MEDIA ID>/likes
+// curl -X POST -H 'Content-Type: application/json' -d '{ "access_token" : "<ACCESS_TOKEN>" }' http://<HOST>/proxy/instagram/media/<MEDIA ID>/likes
+// curl -X DELETE http://<HOST>/proxy/instagram/media/<MEDIA ID>/likes?access_token=<ACCESS TOKEN>
 //
-// curl --header "X-Authorization: Bearer <JWT>" -F 'access_token=<ACCESS TOKEN>' https://$HOST/secure-proxy/instagram/media/<MEDIA ID>/likes
-// curl -F 'access_token=<ACCESS TOKEN>' -F 'jwt=<JWT>' https://$HOST/secure-proxy/instagram/media/<MEDIA ID>/likes
-// curl --header "X-Authorization: Bearer <JWT>" -X DELETE https://$HOST/secure-proxy/instagram/media/<MEDIA ID>/likes?access_token=<ACCESS TOKEN>
-// curl -X DELETE https://$HOST/secure-proxy/instagram/media/<MEDIA ID>/likes?access_token=<ACCESS TOKEN>&jwt=<JWT>
+// curl -X POST --header 'X-Authorization: Bearer <JWT>' -d 'access_token=<ACCESS TOKEN>' http://<HOST>/secure-proxy/instagram/media/<MEDIA ID>/likes
+// curl -X POST -d 'access_token=<ACCESS TOKEN>' -d 'jwt=<JWT>' http://<HOST>/secure-proxy/instagram/media/<MEDIA ID>/likes
+// curl -X DELETE --header 'X-Authorization: Bearer <JWT>' http://<HOST>/secure-proxy/instagram/media/<MEDIA ID>/likes?access_token=<ACCESS TOKEN>
+// curl -X DELETE http://<HOST>/secure-proxy/instagram/media/<MEDIA ID>/likes?access_token=<ACCESS TOKEN>&jwt=<JWT>
+// curl -X DELETE http://<HOST>/secure-proxy/instagram/media/<MEDIA ID>/likes?jwt=<JWT>&access_token=<ACCESS TOKEN>
